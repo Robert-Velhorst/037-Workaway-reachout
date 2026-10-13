@@ -196,7 +196,6 @@ export function createApp({
       ) {
         if (req.headers["x-reach-out"] !== "1")
           return send(403, { error: "Expected a local app request" });
-        const payload = await readJSON(65536);
         await readJSON(65536);
         return send(403, {
           error:

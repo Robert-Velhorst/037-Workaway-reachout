@@ -28,6 +28,8 @@ test("Workaway discovery, extension calls, and automatic sends fail closed", asy
       ["/api/sender/begin", "POST"],
       ["/api/sender/next", "GET"],
       ["/api/discovery/start", "POST"],
+      ["/api/automation/pair-code", "POST"],
+      ["/api/automation/reconcile", "POST"],
     ]) {
       const response = await fetch(base + path, {
         method,
