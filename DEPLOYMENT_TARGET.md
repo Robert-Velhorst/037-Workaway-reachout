@@ -1,7 +1,7 @@
-
-
 # Deployment target
 
-Hetzner is the target for production deployment. New production deployments must be prepared for Hetzner. Existing Vercel or ngrok production use must be inventoried and migrated to Hetzner before being retired; do not claim a migration or cutover until the running service, data, secrets, security controls, backups, and rollback path have been verified.
+The current release is a local-only application. Do not expose its loopback server to a network or deploy it to a hosted environment. It stores candidate notes, messages, and contact history on the host computer and has no multi-user authentication layer.
 
-Preserve local development and test tooling when it is still needed, but do not use Vercel or ngrok for new production deployments. Document the Hetzner architecture, required infrastructure, deployment steps, data and database migration, DNS/TLS, secrets, monitoring, backups, and rollback in the project deployment guide before cutover. Keep credentials and private data out of this file.
+Hetzner remains the target for any future hosted production version, subject to a separate implementation and approval. Before that work begins, prepare a deployment guide covering private network access, authentication, encrypted database storage, backups and restore, TLS and DNS, secrets, monitoring, retention, deletion, and rollback. Keep candidate data and credentials out of deployment configuration and logs.
+
+The Workaway browser connector, profile discovery, and message sender are removed from this release. They must remain disabled unless Workaway gives written permission for the specific integration and the deployed design has been reviewed for privacy and security. Do not migrate, expose, or seed any existing host data as part of such work without explicit authorization.

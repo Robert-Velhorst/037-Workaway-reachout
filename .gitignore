@@ -1,0 +1,15 @@
+node_modules/
+dist/
+data/
+source-archive/
+test-results/
+playwright-report/
+*.log
+.env
+.env.*
+!*.example
+*.sqlite
+*.sqlite-*
+*.zip
+*.sha256
+Opruiminventaris-*
