@@ -142,7 +142,6 @@ export function applyAvailability(
       else if (!old.reviewed) Object.assign(old, e);
     }
     a.coverage = incoming.coverage;
-    a.gapPolicy.enabled = true;
   } else if (action.type === "availability.gaps") {
     check(
       p.confirmed === true,

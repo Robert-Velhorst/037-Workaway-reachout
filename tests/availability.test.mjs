@@ -34,7 +34,7 @@ function planned() {
   });
   return s;
 }
-test("inquiries remain possible occupancy; confirmation requires human-reviewed exact dates", () => {
+test("imports do not arm gap outreach; inquiries remain possible occupancy until reviewed", () => {
   let s = initialState();
   s = act(s, "availability.import", {
     entries: [entry("one")],
@@ -45,7 +45,7 @@ test("inquiries remain possible occupancy; confirmation requires human-reviewed 
       scope: "Test fixture",
     },
   });
-  assert.equal(s.availability.gapPolicy.enabled, true);
+  assert.equal(s.availability.gapPolicy.enabled, false);
   assert.equal(
     occupancyDays(s.availability, "2026-10-01", "2026-10-01")[0].confirmed,
     0,
@@ -87,6 +87,26 @@ test("inquiries remain possible occupancy; confirmation requires human-reviewed 
     s.availability.entries[0].status,
     "confirmed",
     "re-import preserves reviewed corrections",
+  );
+});
+test("re-import preserves the user's gap toggle but expires its review", () => {
+  let s = planned();
+  s.availability.gapPolicy.minimumDays = 10;
+  s = act(s, "availability.import", {
+    entries: [entry("one")],
+    coverage: {
+      readAt: new Date(now).toISOString(),
+      threads: 1,
+      messages: 1,
+      scope: "Test fixture",
+    },
+  });
+  assert.equal(s.availability.gapPolicy.enabled, true);
+  assert.equal(s.availability.gapPolicy.reviewedThrough, "");
+  assert.equal(s.availability.gapPolicy.reviewedAt, "");
+  assert.match(
+    outreachGapReason(s, entry("candidate"), now),
+    /Controleer de bezetting/,
   );
 });
 test("gap control reserves tentative arrivals, checks consecutive days, horizon and fresh completeness", () => {
